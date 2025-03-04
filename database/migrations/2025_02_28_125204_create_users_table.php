@@ -1,10 +1,10 @@
 <?php
-//php artisan make:migration create_loginUserDetails
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('login_user_details', function (Blueprint $table) {
-            $table->id();
-            $table->string('fname');
+        Schema::create('users', function (Blueprint $table) {
+          $table->string('fname');
             $table->string('lname');
-            $table->string('email');
-            $table->bigInteger('number');
+            $table->string('email')->unique();
+            $table->string('password');
+            $table->string('phone', 10);
+            $table->timestamp('last_login');
             $table->timestamps();
         });
     }
@@ -30,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('login_user_details');
+        Schema::dropIfExists('users');
     }
 };
