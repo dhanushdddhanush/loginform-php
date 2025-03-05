@@ -2,40 +2,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class LoginController extends Controller
 {
-    public function showForm()
+    public function showLoginForm()
     {
-        return view('login');
+        return view('login'); 
     }
 
-    public function submitForm(Request $request)
+    public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-        ]);
-
         $user = User::where('email', $request->email)->first();
 
-        if ($user && Hash::check($request->password, $user->password)) {
-            return redirect('/success')->with('user', $user->fname);
-        } else {
-            return redirect('/fail')->withErrors(['login' => 'Invalid email or password.']);
+        if ($user) {
+            if ($user->password === $request->password) {
+                return redirect()->route('success'); 
+            } else {
+                return redirect()->route('fail');  
+            }
         }
-    }
 
-    public function successPage()
-    {
-        return view('success');
-    }
-
-    public function failPage()
-    {
-        return view('fail');
+        return redirect()->route('fail');
     }
 }

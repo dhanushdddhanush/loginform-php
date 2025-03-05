@@ -14,8 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 use App\Http\Controllers\LoginController;
 
+Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
 
-Route::get('/', [LoginController::class, 'showForm']);
-Route::post('/submit', [LoginController::class, 'submitForm'])->middleware('validateUser');
-Route::get('/success', [LoginController::class, 'successPage']);
-Route::get('/fail', [LoginController::class, 'failPage']);
+Route::get('/success', function () {
+    return view('success'); 
+})->name('success');
+
+Route::get('/fail', function () {
+    return view('fail'); 
+})->name('fail');
+

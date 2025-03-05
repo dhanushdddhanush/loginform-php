@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PHP Laravel Form</title>
+    <title>Laravel Login</title>
     <style>
         input {
             border: none;
             padding: 12px;
+            color: black;
             border-radius: 10px;
             background-color: aliceblue;
         }
@@ -17,7 +18,13 @@
             color: white;
         }
 
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
         .container {
+            padding: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -27,41 +34,42 @@
         .forms {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
             background-color: #fbffa3;
-            padding: 40px;
+            padding: 50px;
             border-radius: 20px;
+            text-align: center;
         }
 
-        .error {
-            color: red;
-            font-size: 14px;
+        header {
+            padding: 30px;
+            background-color: black;
+            color: aliceblue;
+            text-align: center;
+            font-size: larger;
         }
     </style>
 </head>
 <body>
-    <header><h1>PHP Laravel Login Form</h1></header>
+    <header>Laravel Login Form</header>
     <div class="container">
         <div class="forms">
-            <form action="{{ url('/submit') }}" method="POST">
+            <form action="/login" method="POST">
                 @csrf
-                <input type="text" name="fname" placeholder="First Name" value="{{ old('fname') }}">
-                @error('fname') <p class="error">{{ $message }}</p> @enderror
-                
-                <input type="text" name="lname" placeholder="Last Name" value="{{ old('lname') }}">
-                @error('lname') <p class="error">{{ $message }}</p> @enderror
-                
-                <input type="email" name="mail" placeholder="Email" value="{{ old('mail') }}">
-                @error('mail') <p class="error">{{ $message }}</p> @enderror
-                
-                <input type="number" name="phone" placeholder="Phone Number" value="{{ old('phone') }}">
-                @error('phone') <p class="error">{{ $message }}</p> @enderror
-
-                <input type="password" name="password" placeholder="Password">
-                @error('password') <p class="error">{{ $message }}</p> @enderror
-                
+                <input type="text" name="fname" placeholder="Enter your first name" required>
+                <input type="text" name="lname" placeholder="Enter your last name" required>
+                <input type="email" name="email" placeholder="Enter your email" required>
+                <input type="password" name="password" placeholder="Enter your password" required>
+                <input type="number" name="phone" placeholder="Enter your phone number" required>
                 <input type="submit" value="Submit">
             </form>
+            @if ($errors->any())
+                <div style="color:red;">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </div>
 </body>
