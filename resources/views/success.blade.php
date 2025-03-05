@@ -6,7 +6,7 @@
     <title>Success</title>
 </head>
 <body>
-    <h2>Welcome, {{ session('user') ?? 'User' }}! You have successfully logged in.</h2>
+    <h2>Welcome, You have successfully logged in.</h2>
     <a href="{{ url('/') }}">Logout</a>
 </body>
 </html>

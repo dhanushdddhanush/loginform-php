@@ -7,6 +7,10 @@
     <style>
         input {
             border: none;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            margin-bottom: 10px;
             padding: 12px;
             color: black;
             border-radius: 10px;
@@ -24,17 +28,14 @@
         }
 
         .container {
-            padding: 20px;
             display: flex;
             justify-content: center;
+            flex-direction: column;
             align-items: center;
             height: 100vh;
         }
 
         .forms {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
             background-color: #fbffa3;
             padding: 50px;
             border-radius: 20px;
