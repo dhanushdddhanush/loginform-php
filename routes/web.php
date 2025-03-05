@@ -2,7 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
+/* php artisan make:middleware AuthMiddleware
+
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -14,14 +15,21 @@ use Illuminate\Support\Facades\Route;
 */
 use App\Http\Controllers\LoginController;
 
-Route::get('/', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
-Route::get('/success', function () {
-    return view('success'); 
-})->name('success');
+Route::middleware(['auth.custom'])->group(function () {
+    Route::get('/success', function () {
+        return view('success');
+    })->name('success');
 
-Route::get('/fail', function () {
-    return view('fail'); 
-})->name('fail');
+    Route::get('/fail', function () {
+        return view('fail');
+    })->name('fail');
+});
 
+
+Route::get('/logout', function () {
+    session()->flush();
+    return redirect('/login')->with('message', 'Logged out successfully.');
+})->name('logout');
