@@ -15,16 +15,36 @@ class LoginController extends Controller
     {
         $user = User::where('email', $request->email)->first();
 
+        if (!$user) {
+            return redirect()->route('fail')->with('error', 'User not found!');
+        }
 
-            if ($user->password === $request->password) {
-                session(['user' => $user->fname]);
+        if ($user->password === $request->password) {
+            session(['user' => $user->fname, 'user_email' => $user->email]);
 
-                return redirect()->route('success');
-            } else {
-                return redirect()->route('fail')->with('error', 'Password does not match!');
-            }
-       
+            return redirect()->route('success');
+        }
 
-        return redirect()->route('fail')->with('error', 'User not found!');
+        
+        return redirect()->route('fail')->with(['error' => 'Invalid email or password!']);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = User::where('email', session('user_email'))->first();
+
+        if (!$user) {
+            return redirect()->route('fail')->with('error', 'Unauthorized!');
+        }
+
+        $user->update([
+            'fname' => $request->fname,
+            'lname' => $request->lname,
+            'phone' => $request->phone,
+        ]);
+
+        session(['user' => $user->fname]);
+
+        return redirect()->route('success')->with('message', 'Profile updated successfully!');
     }
 }

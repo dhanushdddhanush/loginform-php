@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 use App\Http\Controllers\LoginController;
-
+Route::get('/', function () {
+    return view('home');
+})->name('home');
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 
@@ -26,10 +28,16 @@ Route::middleware(['auth.custom'])->group(function () {
     Route::get('/fail', function () {
         return view('fail');
     })->name('fail');
-});
 
+    Route::get('/update-profile', function () {
+        return view('update-profile');
+    })->name('updateProfileForm');
+    
+    Route::post('/update-profile', [LoginController::class, 'updateProfile'])->name('updateProfile');
+    
+});
 
 Route::get('/logout', function () {
     session()->flush();
-    return redirect('/login')->with('message', 'Logged out successfully.');
+    return redirect('/')->with('message', 'Logged out successfully.');
 })->name('logout');

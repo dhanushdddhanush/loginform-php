@@ -15,6 +15,16 @@
             justify-content: center;
             text-decoration:none;
         }
+        #acolor{
+            background-color:rgb(231, 255, 53);
+            color: white;
+            padding: 12px;
+            border: none;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            text-decoration:none;
+        }
         h2{
             background-color:rgb(0, 255, 21);
             padding: 30px;
@@ -31,6 +41,7 @@
 </head>
 <body>
     <h2>Welcome, You have successfully logged in.</h2>
+    <a id="acolor" href="{{ route('updateProfile') }}">Update Profile</a><br>
     <a href="{{ url('/') }}">Logout</a>
 </body>
 </html>
