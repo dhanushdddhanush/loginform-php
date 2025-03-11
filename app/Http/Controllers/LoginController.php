@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Events\UserLoggedIn;
 
 class LoginController extends Controller
 {
@@ -21,11 +22,10 @@ class LoginController extends Controller
 
         if ($user->password === $request->password) {
             session(['user' => $user->fname, 'user_email' => $user->email]);
-
+            event(new UserLoggedIn($user));
             return redirect()->route('success');
         }
 
-        
         return redirect()->route('fail')->with(['error' => 'Invalid email or password!']);
     }
 
@@ -48,3 +48,4 @@ class LoginController extends Controller
         return redirect()->route('success')->with('message', 'Profile updated successfully!');
     }
 }
+
